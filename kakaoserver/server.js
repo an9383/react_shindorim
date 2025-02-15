@@ -151,7 +151,7 @@ app.get('/boardDelete/:id', (req, res)=>{
   const sql = `delete from react_board where id = ${id}` ;
 
   db.query(sql, (err,result)=>{
-    if(err){  return res.status(400).send(err); }
+    if(err){  return res.status(500).send(err); }
     if(result.affectedRows){ return res.status(500).send('삭제할 게시글이 존재하지 않습니다'); }
     res.send('ok');
   });
