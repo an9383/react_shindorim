@@ -1,0 +1,91 @@
+리액트
+1 자바스크립트언어, css 
+ 출력,연산,변수,상수,배열
+ 함수 function game(){ }
+
+
+카톡아이디 posasi2000
+010-9267-1785 강사님
+~~day0125> npm i 실행하면 node_modules폴더 자동생성
+
+2 리액트,vue,angular,svelte
+3 리액트
+  ㄴ대소문자구별, 문장마지막 ;
+4 nodejs + 편집기 VScode 
+  환경설정편집 path
+  VScode에 리액트확장 
+5 리액트 프로젝트 생성
+
+윈도우 키 -> \\604-t ->
+윈도우 키 -> \\604-t -> ★리액트 주말반(김영임강사)
+
+9:30분시작  50분수업에 10분휴식  12:20분 점심식사
+
+
+
+ 제어판
+  ㄴ모든 제어판 항목\프로그램 및 기능
+     ㄴnodejs삭제, vscode삭제 
+	
+ 웹브라우저
+   nodejs다운로드   https://nodejs.org/ko
+   VScode 다운로드  https://code.visualstudio.com/download
+
+node-v22.13.1-x64.msi선택후 기본설치 
+VSCodeUserSetup-x64-1.96.4.exe선택후 설치 체크5개 전부 
+
+
+윈도우 키 누른다음 "시스템 환경 변수 설정"
+ ㄴ환경변수 버튼클릭해서 시스템변수 path선택후 편집
+C:\Program Files\nodejs
+
+*리액트 프로그램설치및 플젝생성
+윈도우키 누르고 cmd입력  cmd=command
+C:~~~> cd \
+C:\>  cd Mtest
+C:\Mtest> path
+C:\Mtest> cls
+
+ 프로젝트이름 day0125
+   <html> <body> div,img,a,ul,table </body> </html>
+   리액트  return( <div> 리액트내용출력{ } </div> );
+
+윈도우키 누르고 powershell 입력
+
+PS C:\Users\Administrator> set-ExecutionPolicy RemoteSigned 
+실행 규칙 변경
+실행 정책은 신뢰하지 않는 스크립트로부터 사용자를 보호합니다. 실행 정책을 변경하면 about_Execution_Policies 도움말
+항목(https://go.microsoft.com/fwlink/?LinkID=135170)에 설명된 보안 위험에 노출될 수 있습니다. 실행 정책을
+변경하시겠습니까?
+[Y] 예(Y) ~~ [A] 모두 예(A)  도움말 (기본값은 "N"): A
+
+PS~~> npm install -g  npx
+PS~~> npm install -g  create-react-app
+
+C:~~> cd \
+C:~~> cd Mtest
+C:\Mtest> npx create-react-app day0125
+C:\Mtest> cd day0125
+C:\Mtest\day0125>  npm install web-vitals   
+C:\Mtest\day0125>  npm start  //실행후 종료 ctrl + C 두세번정도 누르면 종료 
+
+
+
+
+
+번외] vsCode편집기 확장
+ㄴFile메뉴 autoSave체크
+ㄴFile메뉴 Preferences선택 Settings
+   체크 Mouse Wheel Zoom
+ㄴView메뉴 Appearances선택 Sticky Scolly 체크해지 
+ㄴ확장아이콘(5번째)  react입력후 
+  ES7 + React/Redux/React-Native snippets선택후 install클릭 설치
+    Extensions for React, React-Native and Redux~~~with dsznajder
+ㄴAuto Close Tag설치 권장 
+   Automatically Add HTML
+ㄴLive server
+
+
+
+
+
