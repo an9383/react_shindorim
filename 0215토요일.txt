@@ -1,0 +1,170 @@
+
+
+윈도우 키 -> \\604-t ->
+윈도우 키 -> \\604-t -> ★리액트 주말반(김영임강사)
+
+9:30분시작  50분수업에 10분휴식  12:20분 점심식사
+
+https://developer.mozilla.org/ko/docs/Glossary/AJAX
+
+서버구성
+ㄴnodejs 서버구성 명령어 server.js
+ ㄴ통신을 server/client 처리할때
+   client서비스사용하는 입장 react문법 적응
+   server서비스제공하는 입장 서버nodejs/DB쿼리문/통신 
+
+데이터베이스 베이스 언어 SQL = structured query language
+DML - Data Manipulation Lang. 조작
+	select	- 데이터 검색
+	insert	- 데이터 삽입
+	update	- 데이터 수정
+	delete	- 데이터 삭제
+DDL - Data Definition Lang. 정의 
+	Create	- 생성
+	Alter	- 수정
+	Drop	- 삭제
+*-------------------------------------------------------------
+*-------------------------------------------------------------
+윈도우 키 -> \\604-t ->
+윈도우 키 -> \\604-t -> ★리액트 주말반(김영임강사)
+
+
+순서1] 
+https://www.mysql.com
+https://www.mysql.com/downloads/
+ ㄴ하단 MySQL Community (GPL) Downloads클릭 
+ ㄴ왼쪽 MySQL Community Server클릭 
+ ㄴ8.0.41버젼 기본선택  ▼(현재변경됨  9.2.0 Innovation선택금지)
+ ㄴ돌고래 하단에 Go to Download Page >
+
+kakaoserver폴더생성 nodejs문법으로 쿼리문작성
+kakaoclient플젝 리액트구현
+
+
+윈도우버튼 cmd입력
+C:\Users\Administrator> cd\
+C:\> cd Mtest
+C:\Mtest> npx create-react-app  kakaoclient
+C:\Mtest> cd kakaoclient
+C:\Mtest\kakaoclient>  npm install web-vitals   
+C:\Mtest\kakaoclient>  npm start 
+
+
+*-------------------------------------------------------------
+2월8일 토요일(3회차 리액트 수업)
+day0125
+ ㄴnode_modules
+ ㄴpublic
+ ㄴsrc
+   ㄴcomponents
+   ㄴ언급data/data.js문서를 어떻게 App.js에서 호출연결하느냐?
+   ㄴApp.js 
+ ㄴpackage.json
+
+
+<div>
+   OOO.jsx<br></br>
+</div>
+
+~\day0125> npm install axios
+~\day0125> npm install react-bootstrap  bootstrap 
+
+학원에서 가져갈때 node_modules폴더 빼고 복붙
+집에서 npm start 실행했더니 에러발생
+
+~\day0125> npm install
+  node_modules폴더를 다시 생성
+
+//components/BoardWrite.jsx
+import axios from 'axios';
+import React, { useState } from 'react'
+import { Row, Col, Form, Button } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+return (
+<Row className='my-5'>
+            <Col className='p-5'>
+                <h1 className='text-center my-5 text-primary' >게시글 작성</h1>
+                <Form>
+                    <h4 className='text-success'> 제목</h4><Form.Control placeholder='제목을 입력하세요.'
+                        className='my-3' name='title' value={title} onChange={onChange} />
+
+                    <h4 className='text-info'> 작성자</h4><Form.Control placeholder='작성자를 입력하세요.'
+                        className='my-3' name='writer' value={writer} onChange={onChange} />
+
+                    <h4 className='text-primary'> 내용</h4><Form.Control as='textarea' rows={10} placeholder='내용을 입력하세요.'
+                        className='my-3' name='contents' value={contents} onChange={onChange} />
+
+                    <div className='text-center'>
+                        <Button className='mx-2 px-3 btn-sm' variant="primary" onClick={onSubmit} style={{ marginRight: '10px' }}>저장</Button>
+                        <Button className='mx-2 px-3 btn-sm' variant="success" onClick={onReset} >초기화</Button>
+                    </div>
+                </Form>
+            </Col>
+        </Row>
+)
+
+
+//참고 부트스트랩
+  <button> button </button> 
+    <button class="btn btn-primary"> primary </button> 
+    <button class="btn btn-success"> success </button> 
+    <button class="btn btn-info"> info </button> 
+    <button class="btn btn-warning"> warning </button> 
+    <button class="btn btn-danger"> danger </button> 
+    <button class="btn btn-secondary"> secondary </button> 
+    <button class="btn btn-dark"> dark </button> 
+    <button class="btn btn-light"> light </button> 
+    <br>
+
+    <button class="btn btn-outline-primary"> primary </button> 
+    <button class="btn btn-outline-success"> success </button> 
+    <button class="btn btn-outline-info"> info </button> 
+    <button class="btn btn-outline-warning"> warning </button> 
+    <button class="btn btn-outline-danger"> danger </button> 
+    <button class="btn btn-outline-secondary"> secondary </button> 
+
+
+ text-primary, text-success, text-danger 등은 Bootstrap의 텍스트 색상 클래스입니다.
+ text-primary: 파란색
+ text-success: 초록색
+ text-danger: 빨간색
+ text-warning: 주황색
+ text-info: 하늘색
+ text-secondary: 회색
+ font-weight-bold: 텍스트를 굵게 표시합니다.
+ font-italic: 텍스트를 기울임꼴로 표시합니다.
+ small 태그는 제목에 작은 글씨를 추가할 때 사용합니다.
+ 
+
+    <p></p> <br>
+    <button class="btn btn-primary btn-lg"> 보내기 </button> 
+    <button class="btn btn-primary"> 보내기 </button> 
+    <button class="btn btn-primary btn-sm"> 보내기 </button> 
+
+    <p></p> <br>
+    <a href="#"  class="btn btn-primary">네이버구글</a>
+    <a href="#"  class="btn btn-success">카카오아마존</a>
+
+    <p></p> <br>
+    <button class="btn btn-warning btn-lg"> 보내기 </button> 
+    <button class="btn btn-warning"> 보내기 </button> 
+    <button class="btn btn-warning btn-sm"> 보내기 </button> 
+
+
+
+첫째주 리액트 문법  
+리액트 function (){ } const 이름 = {} useState
+리액트 초장기 시작 버젼 class기반 구현 라이프사이클
+ ex) 처음로드시, 시간간격, 버튼클릭,이미지클릭, 입력란변환 
+
+
+image source width  height alter
+<img  src='./data/hy.png' width='250' height='70' alt='수선화' >
+
+  <HeroList  retheroList = {hero}  />
+
+
+
+
+
