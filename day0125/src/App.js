@@ -370,7 +370,6 @@
 // App13Hero
 import './App.css';
 import { useEffect, useState } from 'react';
-import Emp from './components/Emp';
 import HeroList from './components/HeroList';
 import HeroAppend from './components/HeroAppend';
 
