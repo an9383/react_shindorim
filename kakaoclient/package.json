@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "cra-template": "1.2.0",
+    "kakaoclient": "file:",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-scripts": "5.0.1",
@@ -27,7 +28,7 @@
       "not dead",
       "not op_mini all"
     ],
-    "proxy":"http://localhost:5000",
+    "proxy": "http://localhost:5000",
     "__comment": "리액트3000, 노드서버5000",
     "development": [
       "last 1 chrome version",

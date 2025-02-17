@@ -4,7 +4,7 @@ import Emp from './components/Emp';
 
 function App() {
   return (
-    <div className="App"> 
+    <div className="App">
      App.js <br></br> <br></br>
       <Emp />
     </div>

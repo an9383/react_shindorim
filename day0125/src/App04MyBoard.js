@@ -1,6 +1,5 @@
 import hydran from './images/a3.png' ;
 import './App.css';
-
 import MyTest from './components/MyTest';
 import MyBTS from './components/MyBTS';
 import MyBoard from './components/MyBoard';
