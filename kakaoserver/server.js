@@ -132,7 +132,8 @@ app.post("/boardWrite", (req,res)=>{
 //전체출력 가짜이름매핑 boardList 
 app.get('/boardList', (req, res)=>{
   console.log('/boardList 처리');
-  const  sql="select id,title,name,content, date_format(wdate,'%Y-%m-%d') 날짜 from  react_board  " ;
+  // const  sql="select id,title,name,content, date_format(wdate,'%Y-%m-%d') 날짜 from  react_board  " ;
+  const  sql="select * from  react_board  " ;
   db.query(sql, (err,data)=>{
       if(!err){
           res.send(data);
