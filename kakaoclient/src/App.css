@@ -1,9 +1,12 @@
 * {
   margin: 0;
+  align-items: center;
+  justify-content: center;
 }
 
 .App {
   text-align: center;
+
 }
 
 .header {
@@ -49,8 +52,6 @@ table {
 } */
 
 th, td {  border: 1px solid black; }
-
-
 
 .App-logo {
   height: 40vmin;
