@@ -3,6 +3,7 @@ import BoardForm from './BoardForm'
 import BoardList from './BoardList';
 import BoardNav from './BoardNav';
 
+
 const BoardApp = () => {
     const [mode, setMode] = useState('list') ;
     

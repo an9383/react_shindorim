@@ -7,6 +7,7 @@ import { Table, Button} from 'react-bootstrap';
 const BoardList = ({ onMode }) => { 
     const [boardList, setBoardList] = useState([]);
 
+
     useEffect(() => {
         callBoardList();
     }, []);

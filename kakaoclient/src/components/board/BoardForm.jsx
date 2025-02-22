@@ -6,22 +6,23 @@ import axios from 'axios';
 const BoardForm = ({ onMode })  => { 
     const data={
         title:'',
-        name:'',
         content:'',
+        name:'',
     }
  
     const [form, setForm] = useState(data);
-    const {title, name, content} = form;
+    const {title,content,name}=form;
 
     const refTitle=useRef();
-    const refName=useRef();
     const refContent=useRef();
-
+    const refName=useRef();
 
     const onChangeHandler=(e)=>{
         const frm={...form, [e.target.name]:e.target.value};
         setForm(frm);
     }
+
+
 
     const onSubmitHandler = ()=>{
         if(!title){
@@ -42,9 +43,10 @@ const BoardForm = ({ onMode })  => {
             return;
         }
 
+  
         //탐탐이 다시 복붙 성공
         {
-            axios.post('/boardWrite', form) //server의 주소랑 일치해야함.
+            axios.post('/boardWrite', form)
                         .then(res=>{
                             if(res.data==='ok'){
                                 alert('글등록 성공 목록으로 갑니다 testing 2 16  4 15 등록성공');
@@ -56,6 +58,8 @@ const BoardForm = ({ onMode })  => {
                         .catch(err=>{ console.log(err); }) 
         }    
      } ;
+    
+
 
     const onResetHandler=()=>{
         setForm({...form, title:'',content:'' ,name:'' })
