@@ -25,14 +25,15 @@
       "react-app/jest"
     ]
   },
+  "proxy": "http://localhost:5000",
+  "__comment": "리액트3000, 노드서버 5000",
   "browserslist": {
     "production": [
       ">0.2%",
       "not dead",
       "not op_mini all"
     ],
-    "proxy": "http://localhost:5000",
-    "__comment": "리액트3000, 노드서버 5000",
+
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",

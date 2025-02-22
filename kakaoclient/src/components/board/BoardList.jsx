@@ -14,14 +14,12 @@ function BoardList() {
     const callBoardList =  () => {
         let url = "/boardList";
         //axios.get().then(성공시).catch(실패시)
-        axios.get(url)
+        axios.get("/boardList")
             .then((res)=>{
                 setBoardList(res.data);
-                // console.log("Data Testing");
-                // console.log(res.data);
             })
             .catch((err)=> {
-                alert('err: ', err)
+                console.log('err: ', err.message)
             });
     }; //callBoardList End
 
@@ -42,7 +40,8 @@ function BoardList() {
                             <tr key={boards.id}>
                                 <td>{boards.id}</td>
                                 <td>{boards.title}</td>
-                                <td>{boards.writer}</td>
+                                <td>{boards.name}</td>
+                                <td>{boards.wdate}</td>
                             </tr>
                         ))}
                     </tbody>

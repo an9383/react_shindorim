@@ -6,7 +6,7 @@ import BoardList from './components/board/BoardList'
 function App() {
   return (
     <div className="App">
-      {/*<h3>App.js</h3>*/}
+      <h3>App.js</h3>
       {/*<img src={hydran} width="350" height="120" /> <br></br>*/}
       {/*<BoardWrite />*/}
         <BoardList />
