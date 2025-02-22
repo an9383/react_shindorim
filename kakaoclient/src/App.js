@@ -1,6 +1,4 @@
-
-
-// 2025-02-21 금요일 
+// 2025-02-21 금요일
 import  React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
@@ -22,7 +20,8 @@ function App() {
       <BrowserRouter>
           <Container>
               <Row>
-                  <Col xs={12} sm={9} md={8} lg={8}>
+                  {/*<Col xs={12} sm={9} md={8} lg={8}>*/}
+                  <Col >
                     <Routes>
                       <Route path="/"   element={<BoardApp />} />
                       <Route path="/board"   element={<BoardApp />} />
