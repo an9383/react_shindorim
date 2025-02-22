@@ -4,8 +4,8 @@ import BoardWrite from './components/board/BoardWrite'
 function App() {
   return (
     <div className="App">
-      {/*<h3>App.js</h3> */}
-      {/*<img src={hydran} width="350" height="120" /> <br></br>*/}
+      <h3>App.js</h3>
+      <img src={hydran} width="350" height="120" /> <br></br>
       <BoardWrite />
     </div>
   );
