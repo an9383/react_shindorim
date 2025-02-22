@@ -1,25 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
-
+import hydran from './images/hydran.png' ;
+import BoardWrite from './components/board/BoardWrite'
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          신도림 김영임 배고파요~~
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/*<h3>App.js</h3> */}
+      {/*<img src={hydran} width="350" height="120" /> <br></br>*/}
+      <BoardWrite />
     </div>
   );
 }
-
 export default App;

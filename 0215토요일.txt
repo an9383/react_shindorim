@@ -167,8 +167,6 @@ mysql> commit ;
 mysql> select * from  test ; 
 
 
-
-
 drop table react_boardreply;
 drop table react_board;
 create table react_board(
