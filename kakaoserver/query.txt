@@ -1,0 +1,59 @@
+USE naver ;
+SHOW TABLES ;
+
+create TABLE test (
+	CODE INT(4) PRIMARY KEY,
+	NAME VARCHAR(10) NOT NULL
+);
+
+show TABLES;
+DESC test ;
+INSERT INTO test(CODE,NAME) VALUES(7700,'kim');
+INSERT INTO test(CODE,NAME) VALUES(8800,'lee');
+INSERT INTO test(CODE,NAME) VALUES(9900,'goo');
+
+SELECT * FROM test;
+INSERT INTO test(CODE,NAME) VALUES(3300, '길동');
+SELECT * FROM test WHERE NAME = 'kim';
+SELECT * FROM test ORDER BY CODE DESC;
+
+INSERT INTO test(CODE,NAME) VALUES(5566,'cho');
+SELECT * FROM test;
+SELECT * FROM test WHERE CODE = 9900;
+
+UPDATE test SET NAME ='john' WHERE CODE = 7700;
+SELECT * FROM test;
+
+UPDATE test SET NAME = 'two' WHERE CODE = 9900; 
+SELECT * FROM test;
+COMMIT;
+---------------------------------------------------------------------------------------
+USE naver;
+
+drop table react_board;
+create table react_board (
+    id int auto_increment primary key,
+    title varchar(20),
+    name varchar(30),
+    content varchar(30),
+    wdate timestamp default now()
+);
+
+insert into react_board(title, name, content) values('spring', 'kim', 'one');
+insert into react_board(title, name, content) values('summer', 'lee', 'two');
+insert into react_board(title, name, content) values('winter', 'park', 'three');
+COMMIT;
+
+USE naver;
+SELECT * FROM react_board;
+SELECT id,title,NAME,content,date_format(wdate,'%Y-%m-%d') '날짜'FROM react_board ORDER BY id DESC;
+
+SELECT * FROM react_board WHERE id = 2;
+
+INSERT INTO react_board (title,NAME,content) VALUES('react','young','exam');
+
+----------------------------------------------------------------------------
+
+USE naver;
+UPDATE react_board SET title='snow', NAME='you', content='coffee', wdate=NOW() WHERE id = 3;
+COMMIT;
