@@ -5,7 +5,7 @@ import { Table, Row, Col, Form, Button } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
 
 function BoardList() {
-    const [boardList,setBoardList] = useState([]);
+    const [boardList,setBoardList] = useState([]);  // setBoardList에 설정된 값을 boardList에 설정
 
     useEffect(() => {
         callBoardList()
@@ -17,7 +17,8 @@ function BoardList() {
         axios.get("/boardList")
             .then((res)=>{
                 setBoardList(res.data);
-            })
+                console.log('전체데이터출력성공');  // 전체 데이터를 setBoardList 에 ��어서 UI 에 출력
+            })  // 성공시 수행
             .catch((err)=> {
                 console.log('err: ', err.message)
             });
@@ -36,7 +37,7 @@ function BoardList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {boardList.map(boards => (
+                        {boardList.map((boards) => (
                             <tr key={boards.id}>
                                 <td>{boards.id}</td>
                                 <td>{boards.title}</td>
