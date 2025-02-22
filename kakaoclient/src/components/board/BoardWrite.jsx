@@ -13,7 +13,7 @@ function BoardWrite() {
 
 
   return (
-      <div className="App">
+    <div>
       BoardWrite.jsx 3시30 <br></br>
       <Row className='my-5'>
             <Col className='p-5'>

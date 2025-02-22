@@ -10,7 +10,7 @@ const BoardApp = () => {
     const handleMode=(data)=>{   setMode(data);   }
 
     return (
-        <div className="App">
+        <div>    
           <BoardNav items={['List','Write']} onMode={handleMode}/> <hr></hr>
             { 
                 (mode==='list') && <BoardList onMode={handleMode}></BoardList>

@@ -1,23 +1,23 @@
-export const emp = {
-    name : "이합격",
-    age : 24,
-    addr : "서울시티"
+export const student = {
+    name : "유재석",
+    age : 50,
+    addr : "서울"
 }
 
-export const datas = [
+export const students = [
     {
-        name : "안정환",
+        name : "아이유",
         age : 27,
-        addr : "강남동네"
+        addr : "수원"
     },
     {
-        name : "페이커",
-        age : 24,
-        addr : "잠실동네"
-    },
-    {
-        name : "김연경",
+        name : "손흥민",
         age : 30,
-        addr : "도림시티"
+        addr : "영국"
+    },
+    {
+        name : "김연아",
+        age : 30,
+        addr : "서울"
     }
 ]

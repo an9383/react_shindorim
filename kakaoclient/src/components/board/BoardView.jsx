@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Row, Col, Button, Card} from 'react-bootstrap';
+import { Row, Col, Button, Card, Form, Modal } from 'react-bootstrap';
 import { AiFillHeart, AiFillDislike } from 'react-icons/ai';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -12,6 +12,11 @@ const BoardView = () => {
     const [replies, setReplies] = useState([]);
     const [newReply, setNewReply] = useState({ writer: '', memo: '' });
     const navigate = useNavigate();
+
+    //댓글에 필요한추가
+    const [editingReply, setEditingReply] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    
 
     const getBoard = async () => {
         try {
@@ -33,7 +38,7 @@ const BoardView = () => {
 
     useEffect(() => {
         getBoard();
-        getReplies();
+       // getReplies();
     }, []);
 
     const onDelete = async () => {
@@ -45,15 +50,14 @@ const BoardView = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setNewReply({ ...newReply, [name]: value });
+        //setNewReply({ ...newReply, [name]: value });
     };
 
     const addReply = async (e) => {
         e.preventDefault();
         try {
             await axios.post(`/boards/${id}/replies`, newReply);
-            setNewReply({ writer: '', memo: '' });
-            getReplies();
+
         } catch (err) {
             console.error('댓글등록 Error: ', err);
         }
@@ -61,7 +65,7 @@ const BoardView = () => {
 
 
     return (
-        <div className="board-view App">
+        <div className="board-view">
             <Row className='my-5'>
                 <Col className='px-5'>
                     <h2 className='my-5 text-center'>Board View [No. {id}]</h2>
@@ -85,10 +89,53 @@ const BoardView = () => {
                             Created on {board.wdate} by {board.name}
                         </Card.Footer>
                     </Card>
+
                     <Button className='btn mt-4' variant='secondary' onClick={() => navigate('/board')}> Board List </Button>
     
+                  
+                    <ul className="list-group">
+                        {replies.map(reply => (
+                            <li key={reply.num} className="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>{reply.writer}:</strong> {reply.memo}
+                                    <br />
+                                    <small>{reply.reg_date}</small>
+                                </div>
+                                <div>
+                                    <Button variant="info" size="sm" className="mx-1" >Edit</Button>
+                                    <Button variant="danger" size="sm" >Delete</Button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <h3 className="mt-4"> 댓글추가영역 Add a Reply</h3>
+                    <Form onSubmit={addReply}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>작성자writer</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="writer"
+                                value={newReply.writer}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>댓글memo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="memo"
+                                value={newReply.memo}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Button type="submit">Add Reply</Button>
+                    </Form>
                 </Col>
             </Row>
+
         </div>
     );
 };

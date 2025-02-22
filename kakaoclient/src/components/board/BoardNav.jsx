@@ -5,7 +5,7 @@ const BoardNav = (props) => {
     const {items, onMode} = props;
     
     return (
-        <div className="App">
+        <div>
             {
                 items ? items.map((item, i)=>{ //item=> List, Write
                     let itemMode=item.toLowerCase();

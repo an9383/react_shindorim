@@ -1,29 +1,33 @@
-//rfce
-import React from 'react' ;
-import '../App.css' ;
+import React  from 'react';
+import '../App.css';
 
-function HeroList( {retheroList}) {
-  return (
-    <div className="App">
-        HeroList.jsx <br></br>
-        <table>
-          <tr>
-          <td> 번호 </td> <td> 코 드</td> <td>이 름</td>  <td>제 목</td>
-          </tr>
-           {
-            retheroList.map( (item,i) => { 
-            //retheroList.map( function(item,i) { 
-            return(
-              <tr> 
-                <td> {i+1}번째 </td>  
-                <td> {item.code} 
-                </td> <td> {item.name} </td>  
-                <td> {item.title} </td>
-              </tr>)
-            })
-           }
+
+function HeroList({heroList}){
+    return(
+        <div className="App">
+            <h3>Hero List</h3>
+            <table>
+              <tr>
+                <th>code</th>
+                <th>name</th>
+                <th>title</th>
+              </tr>
+  
+                {
+                 //heroList.map(function(item, i){ 가능
+                 heroList.map((item, i) => {
+                    return (
+                        <tr key={i}>
+                            <td>{item.code}</td>
+                            <td>{item.name}</td>
+                            <td>{item.title}</td>
+                        </tr>
+                    );  
+                 })
+                }                                                               
+        
         </table>
-    </div>
-  )
+        </div>
+    )
 }
-export default HeroList
+export default HeroList;
