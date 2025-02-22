@@ -28,6 +28,22 @@ DDL - Data Definition Lang. 정의
 윈도우 키 -> \\604-t ->
 윈도우 키 -> \\604-t -> ★리액트 주말반(김영임강사)
 
+첫번째 카카오서버 마지막 수정
+
+drop table react_boardreply;
+create table react_boardReply (
+   num int auto_increment primary key,
+   writer varchar(10) not null,
+   memo varchar(20) not null, 
+   board_id int,
+   reg_date timestamp default now(),
+   foreign key(board_id) references react_board(id) on delete cascade
+);
+
+commit ;
+desc  react_boardreply ;
+
+
 
 순서1] 
 https://www.mysql.com

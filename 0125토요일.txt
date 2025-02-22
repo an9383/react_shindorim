@@ -3,11 +3,6 @@
  출력,연산,변수,상수,배열
  함수 function game(){ }
 
-
-카톡아이디 posasi2000
-010-9267-1785 강사님
-~~day0125> npm i 실행하면 node_modules폴더 자동생성
-
 2 리액트,vue,angular,svelte
 3 리액트
   ㄴ대소문자구별, 문장마지막 ;
@@ -62,15 +57,13 @@ PS C:\Users\Administrator> set-ExecutionPolicy RemoteSigned
 PS~~> npm install -g  npx
 PS~~> npm install -g  create-react-app
 
+#일반 prompt console
 C:~~> cd \
 C:~~> cd Mtest
 C:\Mtest> npx create-react-app day0125
 C:\Mtest> cd day0125
 C:\Mtest\day0125>  npm install web-vitals   
 C:\Mtest\day0125>  npm start  //실행후 종료 ctrl + C 두세번정도 누르면 종료 
-
-
-
 
 
 번외] vsCode편집기 확장
@@ -87,5 +80,194 @@ C:\Mtest\day0125>  npm start  //실행후 종료 ctrl + C 두세번정도 누르
 
 
 
+실습코드1] App.js문서 
+import hydran from './images/a1.png' ;
+import './App.css';
+
+function App() {
+  var msg1 = 'msg1 선유도' ;
+  let msg2 = 'msg2 여의도 ' ;
+  const msg3 = 'msg3 제주도 ' ;  
+
+  return (
+    /*주석 */
+    <div className="App">
+      <img src={hydran} width="300" height="100" /> <br></br>
+        writer: 라일락  <br></br>
+        {msg1} {msg2} {msg3} <br></br>
+        날짜 : {new Date().toLocaleDateString()} <br></br>
+        시간: {new Date().toLocaleTimeString()} <br></br>
+    </div>
+  );
+}
+export default App;
+
+실습2]
+day0125
+ ㄴpublic
+   ㄴimages그림폴더   접근  ./images/a1.png
+ ㄴsrc
+   ㄴcomponents 사용자정의폴더
+      ㄴMyTest.jsx클래스,  MyBTS.jsx함수형,  MyBoard.jsx함수형 버튼클릭이벤트
+      ㄴHome.jsx,  Header.jsx, Footer.jsx ===> 메뉴바생성 
+   ㄴdata 사용자정의폴더
+   ㄴimages그림폴더 
+ 
+실습코드3] MyTest.jsx
+//rce
+//rce
+import React, { Component } from 'react'
+
+export class MyTest extends Component {
+   static defaultProps  = { book:'비타민', price:9200 } ;
+
+  render() {
+    const mystyle = { fontSize:'14pt', color:'green', fontWeight:'bold'}
+    const {book, price} = this.props
+    return (
+      <div style={mystyle}>
+        MyTest문서 <br></br>
+        책제목 : {book }  <br></br>
+        책가격 : {price }  <br></br>
+        {
+         /* 책제목 : {this.props.book }  <br></br>
+         책가격 : {this.props.price }  <br></br> */
+        }
+       </div>
+    )
+  }
+}
+export default MyTest
+
+
+
+실습코드4] App.js
+import hydran from './images/a3.png' ;
+import './App.css';
+
+import MyTest from './components/MyTest.jsx';
+
+
+function App() {
+  var msg = '독도' ;
+  const now = (
+    <div>
+      날짜 : {new Date().toLocaleDateString()} <br></br>
+      시간 : {new Date().toLocaleTimeString()} <br></br>
+    </div>
+  );
+
+  return (
+    <div className="App">
+        App.js문서영역 <p></p>
+        <MyTest book='한라봉' price='23'  /> <br></br>
+        <MyTest /> <br></br>
+        <img src={hydran} width="300" height="100" /> <br></br>
+    </div>
+  );
+}
+export default App;
+
+
+
+실습코드5] MyBTS.jsx
+//rfce
+
+import React from 'react'
+import  { useState } from 'react'
+
+function MyBTS() {
+    const [title, setTitle] = useState('./images/a1.png');
+    const [memo, setMemo] = useState('./images/main_4.jpg');
+    const [num, setNum] = useState(100);
+
+  return (
+    <div>
+        MyBTS.jsx  <br></br>
+        <img src={title} width='150' height='100'  /> &nbsp;
+        <img src={memo} width='150' height='100'  /> <br></br>
+        초기값 : {num}
+    </div>
+  )
+}
+export default MyBTS
+
+
+실습코드6] MyBoard.jsx
+import React, { useState } from 'react'
+
+function MyBoard() {
+   //전역변수필드 변경setterXXX(), 값추출 타입 getterXXX()
+   const [count, setCount] = useState(100) ;
+   const [color, setColor] = useState('orange');
+
+  return (
+    // {컬러변경, 숫자증감 이벤트}
+    <div>
+        MyBoard.jsx <br/>
+        숫자 : {count}  <br/>
+        <button onClick={ ()=>{setCount(count+5) }}> 증가+ </button>
+        <button onClick={ ()=>{setCount(count-5) }}>  감소- </button>
+
+        <p style={{background:color}}>안녕하세요 </p>
+        <button onClick={()=>setColor('red')}> 빨간 </button>
+        <button onClick={()=>setColor('blue')}> 파랑 </button>
+        <button onClick={()=>setColor('green')}> 그린 </button>
+    </div>
+  )
+}
+export default MyBoard
+
+
+실습7]
+router설치
+C:\Mtest\day0125> npm install --save  react-router-dom  
+
+
+
+
+실습코드8] Header.jsx
+import React from 'react'
+import { Link } from 'react-router-dom'
+
+const Header = () => {
+  return (
+    <div>
+        {/* a태그 Link사용 href속성 to  */}
+        {/* <a href='https://www.naver.com'>네이버</a> */}
+        {/* to속성을 path연결  element={<MyBts />>} */}
+        <Link to="/board">board</Link> &nbsp;
+        <Link to="/bts">bts</Link>  &nbsp;
+        <Link to="/test">test</Link>   &nbsp;
+    </div>
+  )
+}
+export default Header
+
+실습코드9] App.js
+import hydran from './images/a3.png' ;
+import './App.css';
+
+import MyTest from './components/MyTest';
+import MyBTS from './components/MyBTS';
+import MyBoard from './components/MyBoard';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Header from './components/Header';
+
+
+function App() {
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Header /> 
+        <Routes>
+            <Route path='bts' element={<MyBTS/>}></Route>
+
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
+}
+export default App;
 
 
