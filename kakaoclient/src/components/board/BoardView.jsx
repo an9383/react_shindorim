@@ -61,7 +61,7 @@ const BoardView = () => {
 
 
     return (
-        <div className="board-view">
+        <div className="board-view App">
             <Row className='my-5'>
                 <Col className='px-5'>
                     <h2 className='my-5 text-center'>Board View [No. {id}]</h2>

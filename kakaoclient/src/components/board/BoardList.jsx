@@ -26,7 +26,7 @@ const BoardList = ({ onMode }) => {
 
     if (boardList.length > 0) {
         return (
-            <div className='board-list'>
+            <div className='board-list App'>
                 <h2 className='text-center my-5'> Board List  12:53 </h2>
                 <Table striped bordered hover>
                     <thead>

@@ -17,7 +17,7 @@ function App() {
             app.js  2:07 <br></br>
             <BrowserRouter>
                 <Container />
-                    <Row>
+                    <Row className="App">
                         <Col xs={12} sm={9} md={8} lg={8}>
                             <Routes>
                                 <Route path='/' element={<BoardApp />}> </Route>

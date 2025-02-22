@@ -66,7 +66,8 @@ const BoardForm = ({ onMode })  => {
     }
     
     return (
-        <Row className='my-1'>
+        <div className="App">
+            <Row className='my-1'>
             <Col className='p-3' md={8}>
                 <h2 className='text-center my-5'> BoardForm.jsx </h2>
                 <Form>                    
@@ -88,7 +89,8 @@ const BoardForm = ({ onMode })  => {
                     </div>
                 </Form>
             </Col>
-        </Row>
+            </Row>
+        </div>
     );
 };
 export default BoardForm;
