@@ -1,6 +1,5 @@
 import hydran from './images/a3.png' ;
 import './App.css';
-
 import MyTest from './components/MyTest';
 import MyBTS from './components/MyBTS';
 import MyBoard from './components/MyBoard';
@@ -12,7 +11,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header /> 
+        <Header />
         <Routes>
             <Route path='/board' element={<MyBoard/>}> </Route>
             <Route path='/bts' element={<MyBTS/>}> </Route>
