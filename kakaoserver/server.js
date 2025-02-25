@@ -43,14 +43,14 @@ mysql> desc react_board ;
 | wdate   | timestamp   | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
 +---------+-------------+------+-----+-------------------+-------------------+
 웹브라우저 접근 http://localhost:5000/boardList/
-npm i nodemon설치후  npm start대신   npm run dev 실행  
+npm i nodemon설치후  npm start대신   npm run dev 실행
 */
 
 //mysql> select * from react_board  where id = 2  ;
 //한건상세출력 가짜이름매핑 http://localhost:5000/boardView/2
 //app.get(1매핑이름, 2쿼리문기술);
 app.get('/boardView/:id', (req, res)=>{
-  console.log('/boardView/:id 처리'); 
+  console.log('/boardView/:id 처리');
   const id = req.params.id; //꼭기술
   if(!id){
     console.log('한건조회할때 id 필수입니다 ');
@@ -71,7 +71,7 @@ app.get('/boardView/:id', (req, res)=>{
 //mysql>delete from react_board  where id = 2 ;
 //한건삭제  /boardDetele/:id
 app.get('/boardDelete/:id', (req,res)=>{
-  console.log('/boardDelete/:id 처리'); 
+  console.log('/boardDelete/:id 처리');
   const id = req.params.id; //꼭기술
   if(!id){
     console.log('삭제할때 id 필수입니다 ');
@@ -80,7 +80,7 @@ app.get('/boardDelete/:id', (req,res)=>{
   const sql = `delete from react_board  where id = ? ` ;
   db.query(sql, id, (err,result) =>{
     if(err){ return res.status(500).send(err); }
-    if(result.affectedRows=== 0){ return res.status(500).send('삭제할 게시글이 존재하지 않습니다'); }      
+    if(result.affectedRows=== 0){ return res.status(500).send('삭제할 게시글이 존재하지 않습니다'); }
     res.send('ok');
    });
 });
@@ -90,10 +90,10 @@ app.get('/boardDelete/:id', (req,res)=>{
 //update react_board  set title='aaa', name='bbb', content='ccc',  wdate=now() where id = 8 ;
 //한건수정 /boardModify/:id
 app.post('/boardModify/:id', (req,res)=>{
-  console.log('/boardModify/:id 처리'); 
+  console.log('/boardModify/:id 처리');
   const id = req.params.id; //꼭기술
   const {title, name, content} = req.body; //꼭기술
- 
+
   if(!id || !title || !name || !content){
     console.log('수정에 필요한 데이터 누락되었습니다 ');
     return res.status(500).send('수정에 필요한 데이터항목들이 필요합니다');
@@ -102,7 +102,7 @@ app.post('/boardModify/:id', (req,res)=>{
   const sql = `update react_board  set title=?, name=?, content=?  where id = ? ` ;
   db.query(sql, [title, name,content,id], (err,result) =>{
     if(err){ return res.status(500).send(err); }
-    if(result.affectedRows=== 0){ return res.status(500).send('삭제할 게시글이 존재하지 않습니다'); }      
+    if(result.affectedRows=== 0){ return res.status(500).send('삭제할 게시글이 존재하지 않습니다'); }
     res.send('ok');
    });
 });
@@ -120,16 +120,16 @@ app.post("/boardWrite", (req,res)=>{
      console.log('제목,이름,내용 입력은 필수입니다');
      return res.status(400).send('제목,이름,내용 필수입력');
   }
-  
+
   const sql = `insert into react_board set ? ` ;
-  db.query(sql, boardData, (err,data)=>{ 
+  db.query(sql, boardData, (err,data)=>{
     if(err){  return res.status(400).send(err); }
     res.send('ok')
   });
 });
 
 //********************************************************************************
-//전체출력 가짜이름매핑 boardList 
+//전체출력 가짜이름매핑 boardList
 app.get('/boardList', (req, res)=>{
   console.log('/boardList 처리');
   // const  sql="select id,title,name,content, date_format(wdate,'%Y-%m-%d') 날짜 from  react_board  " ;
@@ -175,7 +175,7 @@ drop table react_boardreply;
 create table react_boardReply (
    num int auto_increment primary key,
    writer varchar(10) not null,
-   memo varchar(20) not null, 
+   memo varchar(20) not null,
    board_id int,
    reg_date timestamp default now(),
    foreign key(board_id) references react_board(id) on delete cascade
@@ -185,7 +185,3 @@ commit ;
 desc  react_boardReply ;
 
 */
-
-
-
-
