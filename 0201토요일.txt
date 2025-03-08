@@ -134,7 +134,7 @@ export default App;
 
 실습2]
 router설치
-C:\Mtest\day0125> npm install --save  react-router-dom  
+C:\Mtest\day0125> npm install --save  react-dom  
 
 
 

@@ -28,8 +28,120 @@ DDL - Data Definition Lang. 정의
 윈도우 키 -> \\604-t ->
 윈도우 키 -> \\604-t -> ★리액트 주말반(김영임강사)
 
-첫번째 카카오서버 마지막 수정
 
+네번째 App.js문서  
+import  React from 'react';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+import axios from 'axios';
+import { Table, Button} from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+
+import BoardApp  from './components/board/BoardApp' ;
+import BoardNav from './components/board/BoardNav' ;
+import BoardView  from './components/board/BoardView' ;
+import BoardForm  from './components/board/BoardForm' ;
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+function App() {
+
+  return (
+    <div className="App">
+        app.js  2:07 <br></br>
+        
+    </div>
+  );
+}
+export default App;
+
+ 		
+	단독실행이 가능한 컴포넌트 대상  BoardForm.jsx
+	단독실행이 가능한 컴포넌트 대상  BoardList.jsx
+	단독실행대상 아님 한건상세, 한건삭제, 한건수정 
+	
+//---------------------------------------------------------
+첫번째 카카오서버 마지막 수정
+두번째 카카오클라이언트 설치
+세번째 통신( 서버 5000포트 & 클라이언트 3000포트 )
+ ㄴ 서비스이용하는 클라이언트 "proxy": "locatlhost:5000" ,
+ ㄴ 통신을 성공후 데이터 주고받고 
+    axios.get( ('/boardList').then( res=>{res.data}) )  전체출력,한건출력, 한건삭제
+    axios.post( ('/boardWrite').then(입력란데이터) ) 한건등록, 한건수정
+
+연산
+ ㄴ 산술연산  + - * /몫, 나머지
+ ㄴ 관계연산  >= <= > < === 
+ ㄴ 논리연산  ||  &&
+ ㄴ 삼항연산  ret결과 = hap>=70 ? "축합격" : "재시험"
+    kor=90; eng=85; hap=kor+eng
+    if(hap>=70){ "축합격" }
+    else { "재시험" }
+    
+
+
+클라이언트 반드시 설치 
+C:~client> npm i axios   
+C:~client> npm i react-icons  
+C:~client> npm i react-bootstrap  bootstrap
+C:~client> npm i react-dom  
+C:~client> npm i react-router-dom  
+
+kakaoclient플젝의 node_modules 삭제후
+kakaoclient> npm  i
+
+
+
+App.js ->  BoardApp.jsx + BoardNav.jsx 
+   components/board/BoardApp.jsx문서역할 write/list
+   BoardApp.jsx문서 BoardNav.jsx포함
+   BoardNav.jsx문서 <Link to onClick={}>
+   
+   list클릭   BoardList.jsx문서로 넘어갈때 onMode
+   write클릭  BoardForm.jsx문서로 넘어갈때 onMode
+   
+  BoardList.jsx문서에서 제목클릭하면 상세문서 BoardView.jsx
+      <td> {boards.title} </td>
+
+  BoardView.jsx문서는 한건만 출력
+    ㄴ 수정작업BoardModify.jsx문서, 삭제작업은 문서가 따로 없습니다
+    ㄴ 하단에 댓글 
+
+
+ 3월1일 삼일절 공휴일 쉬고 
+ 3월8일 토요일 삭제, 수정, 댓글작업, 리덕스예제 
+ 
+ BoardList.jsx문서에는
+  ㄴ 총레코드갯수 
+  ㄴ 제목클릭하면 한건상세
+  ㄴ 검색 & 페이징 추가  
+     posasi2000 네이버  
+     posasi2000@naver.com  김영임(김영림=라일락)
+
+
+
+
+
+insert into react_board(title, name, content) values('spring', 'kim', 'one');
+insert into react_board(title, name, content) values('summer', 'lee', 'two');
+insert into react_board(title, name, content) values('winter', 'park', 'three');
+commit;
+
+select * from react_board;
+commit;
+
+mysql> update react_board  set title='snow', name='you', 
+        content='coffee',  wdate=now()  where  id = 10 ;
+
+mysql> commit;
+mysql> select * from react_board ;
+
+mysql> delete  from react_board  where id = 4 ;
+mysql> commit;
+mysql> select * from react_board ;
+
+
+*----------------------------------------------------------
 drop table react_boardreply;
 create table react_boardReply (
    num int auto_increment primary key,
