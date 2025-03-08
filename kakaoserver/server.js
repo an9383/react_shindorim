@@ -144,20 +144,68 @@ app.get('/boardList', (req, res)=>{
   });
 });
 
-//147라인위쪽은 게시판CRUD처리 이제 149라인부터 댓글
-//const response =  await axios.get('/boards/${id}/replies');
-app.get('/boards/:board_id/replies', (req, res) => {
-  console.log('/boards/:board_id/replies 처리');
-  const board_id = req.params.board_id;
-  const { writer, memo } = req.body;
-  const query = "select * from react_boardreply where board_id ={board_id} order by reg_date";
+//게시판수정처리 서버 app.post('/boardModify/:id', (req,res)=>{
+//147라인위쪽은 게시판crud처리 이제 149라인부터 댓글 
+//const response = await axios.get(`/boards/${id}/replies`); 
+app.get('/boards/:board_id/replies', (req, res)=>{
+  console.log('댓글출력처리'); //BoardView.jsx문서 한건상세(수정,삭제) + 댓글출력     
+  const board_id = req.params.board_id; //꼭기술
+  const query = "select * from react_boardreply where board_id = ? "; 
+});
 
+//댓글 등록 
+app.post('/boards/:board_id/replies', (req, res) => {
+  const { board_id } = req.params;
+  const { writer, memo } = req.body;
+  const query = 'insert into  react_boardReply (writer, memo, board_id) VALUES (?, ?, ?)';
+  db.query(query, [writer, memo, board_id], (error, results) => {
+      if (error) {
+          return res.status(500).send(error);
+      }
+      res.json({ message: 'Reply added successfully', num: results.insertId });
+  });
 });
 
 
 
+//댓글 Update 
+app.put('/replies/:num', (req, res) => {
+  const { num } = req.params;
+  const { writer, memo } = req.body;
+  const query = 'update react_boardReply  SET writer = ?, memo = ? WHERE num = ?';
+  db.query(query, [writer, memo, num], (error, results) => {
+      if (error) {
+          return res.status(500).send(error);
+      }
+      res.json({ message: 'Reply updated successfully' });
+  });
+});
 
 
+//댓글 Delete a reply
+app.delete('/replies/:num', (req, res) => {
+  const { num } = req.params;
+  const query = 'delete from  react_boardReply   WHERE num = ?';
+  db.query(query, [num], (error, results) => {
+      if (error) {
+          return res.status(500).send(error);
+      }
+      res.json({ message: 'Reply deleted successfully' });
+  });
+});
+
+
+/*
++----------+-------------+------+-----+-------------------+-------------------+
+| Field    | Type        | Null | Key | Default           | Extra             |
++----------+-------------+------+-----+-------------------+-------------------+
+| num      | int         | NO   | PRI | NULL              | auto_increment    |
+| writer   | varchar(10) | NO   |     | NULL              |                   |
+| memo     | varchar(20) | NO   |     | NULL              |                   |
+| board_id | int         | YES  | MUL | NULL              |                   |
+| reg_date | timestamp   | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++----------+-------------+------+-----+-------------------+-------------------+
+*/
 //********************************************************************************
 /*
 create database naver ;
@@ -195,7 +243,6 @@ create table react_boardReply (
 
 commit ;
 desc  react_boardReply ;
-
 */
 
 
