@@ -34,7 +34,7 @@ const BoardView = () => {
 
     useEffect(() => {
         getBoard();
-       // getReplies();
+        getReplies();   //28번라인, 서버단
     }, []);
 
     const onDelete = async () => {
@@ -88,7 +88,7 @@ const BoardView = () => {
 
                     <Button className='btn mt-4' variant='secondary' onClick={() => navigate('/board')}> Board List </Button>
     
-                  
+
                     <ul className="list-group">
                         {replies.map(reply => (
                             <li key={reply.num} className="list-group-item d-flex justify-content-between align-items-center">

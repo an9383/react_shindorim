@@ -144,6 +144,18 @@ app.get('/boardList', (req, res)=>{
   });
 });
 
+//147라인위쪽은 게시판CRUD처리 이제 149라인부터 댓글
+//const response =  await axios.get('/boards/${id}/replies');
+app.get('/boards/:board_id/replies', (req, res) => {
+  console.log('/boards/:board_id/replies 처리');
+  const board_id = req.params.board_id;
+  const { writer, memo } = req.body;
+  const query = "select * from react_boardreply where board_id ={board_id} order by reg_date";
+
+});
+
+
+
 
 
 //********************************************************************************
