@@ -27,8 +27,8 @@ app.listen(PORT, ()=>{
 });
 
 db.connect((error)=>{
-  if (!error){ console.log( 'db접속 성공 2-22-토요일  10시 15분  ');}
-  else{ console.log('db접속 실패 2-22-토요일  10시 15분 ');  }
+  if (!error){ console.log( 'db접속 성공 3-08-토요일  9시 47분  ');}
+  else{ console.log('db접속 실패 3-08-토요일  9시 47분 ');  }
 });
 
 /*
