@@ -19,12 +19,8 @@ const BoardView = () => {
     
 
     const getBoard = async () => {
-        try {
-            const board = await axios.get(`/boardView/${id}`);
-            setBoard(board.data[0]);
-        } catch (err) {
-            alert('err: ' + err.message);
-        }
+        const board = await axios.get(`/boardView/${id}`);  //1건상세 데이터가져오기
+        setBoard(board.data[0]);
     };
 
     const getReplies = async () => {
