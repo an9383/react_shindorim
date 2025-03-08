@@ -70,14 +70,11 @@ const BoardView = () => {
 
 
     //댓글 수정
-    const updateReply = async (e) => {
-        //e.preventDefault(); 생략가능
-        //try {
+    const updateReply = async (e) => { //<Modal.Body> <Form onSubmit={updateReply}>
             await axios.put(`/replies/${editingReply.num}`, editingReply);
             setShowEditModal(false);
             setEditingReply(null);
             getReplies(); //댓글내용 뿌리기
-        //} catch (err) {console.error('Error updating reply:', err);  }
     }; 
 
     //댓글에 댓글입력시  onChange이벤트에서 호출함
@@ -86,7 +83,7 @@ const BoardView = () => {
         setEditingReply({ ...editingReply, [name]: value });
     };
 
-    //댓글에  수정
+    //댓글에  수정하기전에 모달창으로 이동시켜주는 역할 
     const startEditingReply = (reply) => {
         setEditingReply(reply);
         setShowEditModal(true);
@@ -131,7 +128,7 @@ const BoardView = () => {
                                     <small>{reply.reg_date}</small>
                                 </div>
                                 <div>
-                                    <Button variant="info" size="sm" className="mx-1" >댓글Edit</Button>
+                                    <Button variant="info" size="sm" className="mx-1"  onClick={ ()=>{startEditingReply(reply)} }>댓글Edit</Button>
                                     <Button variant="danger" size="sm" onClick={()=> deleteReply(reply.num)}> 댓글삭제 </Button>
                                 </div>
                             </li>

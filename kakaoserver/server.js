@@ -151,8 +151,8 @@ app.get('/boards/:board_id/replies', (req, res)=>{
   const query = "select * from react_boardreply where board_id = ? "; 
   db.query(query, [board_id], (error,results) =>{ 
     if(!error){ 
-      res.send(results);  //첫번째 시도 
-      // res.json(results); 두번째시도
+      // res.send(results);  //첫번째 시도 
+      res.json(results); //두번째시도
     }
     else{
       console.log('댓글출력에러 발생 ', error );
@@ -160,7 +160,6 @@ app.get('/boards/:board_id/replies', (req, res)=>{
      }
   });
 });
-
 
 //댓글 등록 복붙
 app.post('/boards/:board_id/replies', (req, res) => {

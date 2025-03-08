@@ -35,7 +35,7 @@ button {
 /* 배열출력 table사용  */
 table {
   width:  550px;
-  margin-left: 400px;
+  /* margin-left: 400px; */
   border: 1px solid black;
   border-collapse: collapse;
   text-align: center;
