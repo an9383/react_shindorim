@@ -27,8 +27,8 @@ app.listen(PORT, ()=>{
 });
 
 db.connect((error)=>{
-  if (!error){ console.log( 'db접속 성공 3-08-토요일  9시 47분  ');}
-  else{ console.log('db접속 실패 3-08-토요일  9시 47분 ');  }
+  if (!error){ console.log( 'db접속 성공 03-08-토요일  9시 47분  ');}
+  else{ console.log('db접속 실패 03-08-토요일  9시 47분  ');  }
 });
 
 /*
@@ -132,8 +132,8 @@ app.post("/boardWrite", (req,res)=>{
 //전체출력 가짜이름매핑 boardList 
 app.get('/boardList', (req, res)=>{
   console.log('/boardList 처리');
-  // const  sql="select id,title,name,content, date_format(wdate,'%Y-%m-%d') 날짜 from  react_board  " ;
-  const sql="select * from  react_board " ;
+  // const  sql="select id,title,name,content, date_format(wdate,'%Y-%m-%d') wdate from  react_board  " ;
+  const  sql="select  * from  react_board" ;
   db.query(sql, (err,data)=>{
       if(!err){
           res.send(data);
@@ -175,7 +175,7 @@ drop table react_boardreply;
 create table react_boardReply (
    num int auto_increment primary key,
    writer varchar(10) not null,
-   memo varchar(20) not null,
+   memo varchar(20) not null, 
    board_id int,
    reg_date timestamp default now(),
    foreign key(board_id) references react_board(id) on delete cascade
