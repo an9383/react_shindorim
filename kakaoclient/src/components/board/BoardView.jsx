@@ -18,23 +18,23 @@ const BoardView = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     
 
-    const getBoard = async () => {
-        const board = await axios.get(`/boardView/${id}`);  //1건상세 데이터가져오기
+    const getBoard = async () => { //getBoard함수를 36번라인  useEffect()에서호출
+        const board = await axios.get(`/boardView/${id}`); //1건상세 데이터가져오기 서버의 52라인과연결
         setBoard(board.data[0]);
     };
 
     const getReplies = async () => {
         try {
-            const response = await axios.get(`/boards/${id}/replies`);
+            const response = await axios.get(`/boards/${id}/replies`);  //kakaoserver폴더 server.js문서 
             setReplies(response.data);
         } catch (err) {
-            console.error('Error fetching replies:', err);
+            console.error('03-08-토요일 졸리는 시간 Error fetching replies:', err);
         }
     };
 
     useEffect(() => {
         getBoard();
-        getReplies();   //28번라인, 서버단
+        getReplies(); //28번라인, 서버단 boards/:번호/replies찾음
     }, []);
 
     const onDelete = async () => {
@@ -44,21 +44,41 @@ const BoardView = () => {
         }
     };
 
-    const handleInputChange = (e) => {
+    //댓글 추가전에 기존내용 복사 ...퍼짐연산배열 spread연산배열
+    const handleInputChange = (e) => { 
         const { name, value } = e.target;
-        //setNewReply({ ...newReply, [name]: value });
+        setNewReply({ ...newReply, [name]: value });
     };
 
+    //댓글 추가
     const addReply = async (e) => {
-        e.preventDefault();
-        try {
-            await axios.post(`/boards/${id}/replies`, newReply);
-
-        } catch (err) {
-            console.error('댓글등록 Error: ', err);
-        }
+        //e.preventDefault();
+        //try {
+            await axios.post(`/boards/${id}/replies`, newReply); //server.js문서 
+        //} catch (err) { console.error('댓글등록 Error: ', err);      }
     };
 
+   
+    //댓글 삭제
+    const deleteReply = async (replyId) => {
+        //try {
+            alert(replyId , '번호 댓글 삭제합니다');
+            await axios.delete(`/replies/${replyId}`);
+            getReplies();
+        //} catch (err) { console.error('Error deleting reply:', err);   }
+    };
+
+
+    //댓글 수정
+    const updateReply = async (e) => {
+        //e.preventDefault(); 생략해도 댓글 잘 달림
+        //try {
+            await axios.put(`/replies/${editingReply.num}`, editingReply);
+            setShowEditModal(false);
+            setEditingReply(null);
+            getReplies();
+        //} catch (err) {console.error('Error updating reply:', err);  }
+    }; 
 
     return (
         <div className="board-view">
@@ -88,7 +108,7 @@ const BoardView = () => {
 
                     <Button className='btn mt-4' variant='secondary' onClick={() => navigate('/board')}> Board List </Button>
     
-
+                  
                     <ul className="list-group">
                         {replies.map(reply => (
                             <li key={reply.num} className="list-group-item d-flex justify-content-between align-items-center">
@@ -98,8 +118,8 @@ const BoardView = () => {
                                     <small>{reply.reg_date}</small>
                                 </div>
                                 <div>
-                                    <Button variant="info" size="sm" className="mx-1" >Edit</Button>
-                                    <Button variant="danger" size="sm" >Delete</Button>
+                                    <Button variant="info" size="sm" className="mx-1" >댓글Edit</Button>
+                                    <Button variant="danger" size="sm" >댓글삭제</Button>
                                 </div>
                             </li>
                         ))}

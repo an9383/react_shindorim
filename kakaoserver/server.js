@@ -147,10 +147,19 @@ app.get('/boardList', (req, res)=>{
 //게시판수정처리 서버 app.post('/boardModify/:id', (req,res)=>{
 //147라인위쪽은 게시판crud처리 이제 149라인부터 댓글 
 //const response = await axios.get(`/boards/${id}/replies`); 
-app.get('/boards/:board_id/replies', (req, res)=>{
-  console.log('댓글출력처리'); //BoardView.jsx문서 한건상세(수정,삭제) + 댓글출력     
-  const board_id = req.params.board_id; //꼭기술
-  const query = "select * from react_boardreply where board_id = ? "; 
+app.get('/boards/:board_id/replies', (req, res) => {
+  console.log('/boards/:board_id/replies 처리');
+  const board_id = req.params.board_id;
+  const query = "SELECT * FROM react_boardreply WHERE board_id = ? ORDER BY reg_date";
+
+  db.query(query, [board_id], (err, results) => {
+    if (err) {
+      console.error('댓글출력에러 발생', err);
+      return res.status(500).json({ error: "내부 에러 출력" });
+    }
+    //res.send(results);
+    res.json(results);
+  });
 });
 
 //댓글 등록 
