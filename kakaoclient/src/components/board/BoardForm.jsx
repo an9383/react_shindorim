@@ -49,7 +49,7 @@ const BoardForm = ({ onMode })  => {
             axios.post('/boardWrite', form)
                         .then(res=>{
                             if(res.data==='ok'){
-                                alert('글등록 성공 목록으로 갑니다 testing 2 16  4 15 등록성공');
+                                alert('글등록 성공 목록으로 갑니다 testing  03-08-토요일  등록성공');
                                 onMode('list');
                             }else{
                                 alert('글 등록 실패')

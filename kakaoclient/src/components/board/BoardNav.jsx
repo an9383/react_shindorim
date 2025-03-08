@@ -16,7 +16,6 @@ const BoardNav = (props) => {
                     )
                 }) : ''
             }
-
         </div>
     );
 };

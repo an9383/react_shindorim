@@ -8,7 +8,7 @@ const BoardList = ({ onMode }) => {
     const [boardList, setBoardList] = useState([]);
 
 
-    useEffect(() => {
+    useEffect(() => {  //onLoad=main함수역할=마운트mount
         callBoardList();
     }, []);
 
@@ -19,7 +19,8 @@ const BoardList = ({ onMode }) => {
                 setBoardList(res.data);
             })
             .catch((err) => {
-                alert('error: ' + err.message);
+                //alert('error: ' + err.message);
+                console.log('error: ' + err.message);
             });
     };
 
@@ -27,7 +28,7 @@ const BoardList = ({ onMode }) => {
     if (boardList.length > 0) {
         return (
             <div className='board-list'>
-                <h3 className='text-center my-5'> Board List  3시 2분 </h3>
+                <h3 className='text-center my-5'> Board List </h3>
                 <Table striped bordered hover>
                     <thead>
                     <tr>
@@ -41,7 +42,7 @@ const BoardList = ({ onMode }) => {
                     {boardList.map(boards => (
                         <tr key={boards.id}>
                             <td>{boards.id}</td>
-                            <td> <Link to={`/board/${boards.id}`}>{boards.title}</Link> </td>
+                            <td> <Link to={`/board/${boards.id}`}> {boards.title} </Link> </td>
                             <td>{boards.name}</td>
                             <td>{boards.wdate}</td>
                         </tr>

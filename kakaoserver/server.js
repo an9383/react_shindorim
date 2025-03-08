@@ -27,8 +27,8 @@ app.listen(PORT, ()=>{
 });
 
 db.connect((error)=>{
-  if (!error){ console.log( 'db접속 성공 03-08-토요일  9시 47분  ');}
-  else{ console.log('db접속 실패 03-08-토요일  9시 47분  ');  }
+  if (!error){ console.log( 'db접속 성공 03-08-토요일  13시 49분  ');}
+  else{ console.log('db접속 실패 03-08-토요일  13시 49분  ');  }
 });
 
 /*
@@ -144,25 +144,25 @@ app.get('/boardList', (req, res)=>{
   });
 });
 
-//게시판수정처리 서버 app.post('/boardModify/:id', (req,res)=>{
-//147라인위쪽은 게시판crud처리 이제 149라인부터 댓글 
-//const response = await axios.get(`/boards/${id}/replies`); 
-app.get('/boards/:board_id/replies', (req, res) => {
-  console.log('/boards/:board_id/replies 처리');
-  const board_id = req.params.board_id;
-  const query = "SELECT * FROM react_boardreply WHERE board_id = ? ORDER BY reg_date";
-
-  db.query(query, [board_id], (err, results) => {
-    if (err) {
-      console.error('댓글출력에러 발생', err);
-      return res.status(500).json({ error: "내부 에러 출력" });
+//댓글출력 3-8-토요일 4교시에 처리
+app.get('/boards/:board_id/replies', (req, res)=>{
+  console.log('댓글출력처리 /boards/:board_id/replies'); //BoardView.jsx문서 한건상세(수정,삭제) + 댓글출력     
+  const {board_id} = req.params; //꼭기술
+  const query = "select * from react_boardreply where board_id = ? "; 
+  db.query(query, [board_id], (error,results) =>{ 
+    if(!error){ 
+      res.send(results);  //첫번째 시도 
+      // res.json(results); 두번째시도
     }
-    //res.send(results);
-    res.json(results);
+    else{
+      console.log('댓글출력에러 발생 ', error );
+      return res.status(500).send(error);
+     }
   });
 });
 
-//댓글 등록 
+
+//댓글 등록 복붙
 app.post('/boards/:board_id/replies', (req, res) => {
   const { board_id } = req.params;
   const { writer, memo } = req.body;

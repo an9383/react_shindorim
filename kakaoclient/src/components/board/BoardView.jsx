@@ -13,7 +13,7 @@ const BoardView = () => {
     const [newReply, setNewReply] = useState({ writer: '', memo: '' });
     const navigate = useNavigate();
 
-    //댓글에 필요한추가
+    //댓글수정에 필요함 
     const [editingReply, setEditingReply] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
     
@@ -63,7 +63,7 @@ const BoardView = () => {
     const deleteReply = async (replyId) => {
         //try {
             alert(replyId , '번호 댓글 삭제합니다');
-            await axios.delete(`/replies/${replyId}`);
+            await axios.delete(`/replies/${replyId}`); //server.js문서에 통신 
             getReplies();
         //} catch (err) { console.error('Error deleting reply:', err);   }
     };
@@ -71,14 +71,27 @@ const BoardView = () => {
 
     //댓글 수정
     const updateReply = async (e) => {
-        //e.preventDefault(); 생략해도 댓글 잘 달림
+        //e.preventDefault(); 생략가능
         //try {
             await axios.put(`/replies/${editingReply.num}`, editingReply);
             setShowEditModal(false);
             setEditingReply(null);
-            getReplies();
+            getReplies(); //댓글내용 뿌리기
         //} catch (err) {console.error('Error updating reply:', err);  }
     }; 
+
+    //댓글에 댓글입력시  onChange이벤트에서 호출함
+    const handleEditInputChange = (e) => {
+        const { name, value } = e.target;
+        setEditingReply({ ...editingReply, [name]: value });
+    };
+
+    //댓글에  수정
+    const startEditingReply = (reply) => {
+        setEditingReply(reply);
+        setShowEditModal(true);
+    };
+
 
     return (
         <div className="board-view">
@@ -119,7 +132,7 @@ const BoardView = () => {
                                 </div>
                                 <div>
                                     <Button variant="info" size="sm" className="mx-1" >댓글Edit</Button>
-                                    <Button variant="danger" size="sm" >댓글삭제</Button>
+                                    <Button variant="danger" size="sm" onClick={()=> deleteReply(reply.num)}> 댓글삭제 </Button>
                                 </div>
                             </li>
                         ))}
@@ -151,6 +164,38 @@ const BoardView = () => {
                     </Form>
                 </Col>
             </Row>
+
+            {/* 댓글을 수정입력해야 하는 입력란을 모달dialog박스 */}
+            <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Reply</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={updateReply}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>작성자</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="writer"
+                                value={editingReply?.writer || ''}
+                                onChange={handleEditInputChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>댓글</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="memo"
+                                value={editingReply?.memo || ''}
+                                onChange={handleEditInputChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Button type="submit">Update Reply</Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
 
         </div>
     );
