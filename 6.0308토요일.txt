@@ -1,0 +1,716 @@
+댓글, 리덕스
+
+순서1] 라우터설치 메뉴생성 List전체출력, Write글쓰기
+순서2] server백단성공   &  client프런트단
+       ㄴ노드+sql          ㄴ리액트react
+순서3] App.js => BoardApp.jsx => BoardNav.jsx
+순서4] BoardList.jsx전체출력 axios.get(서버의url주소).then(성공).catch(실패)
+순서5] BoardList.jsx전체출력 제목클릭 한건상세 BoardView.jsx문서로 이동
+순서6] BoardView.jsx문서 한건상세
+       ㄴaxios다르게접근 + 수정,삭제  
+         수정처리문서는 BoardModify.jsx
+         삭제처리는 함수구현호출만 onDelete함수를 <button onClick={onDelete}
+
+순서7] mysql문서 댓글 관련 table생성 react_boardreply
+   
+순서8] BoardView.jsx문서  3교시 댓글 시작,  한건상세(수정,삭제)해결  
+      BoardView.jsx문서 
+       ㄴ댓글출력 + 댓글입력
+        react_board테이블보다는 react_boardreply테이블사용 서버server.js문서 댓글출력 
+
+순서7] 리덕스예제 
+
+
+//댓글수정 BoardView.jsx
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+import React, { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Row, Col, Button, Card, Form, Modal } from 'react-bootstrap';
+import { AiFillHeart, AiFillDislike } from 'react-icons/ai';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+const BoardView = () => {
+    const { id } = useParams();
+    const [board, setBoard] = useState({});
+    const [replies, setReplies] = useState([]);
+    const [newReply, setNewReply] = useState({ writer: '', memo: '' });
+    const navigate = useNavigate();
+
+    //댓글수정에 필요함 
+    const [editingReply, setEditingReply] = useState(null);
+    const [showEditModal, setShowEditModal] = useState(false);
+    
+
+    const getBoard = async () => { //getBoard함수를 36번라인  useEffect()에서호출
+        const board = await axios.get(`/boardView/${id}`); //1건상세 데이터가져오기 서버의 52라인과연결
+        setBoard(board.data[0]);
+    };
+
+    const getReplies = async () => {
+        try {
+            const response = await axios.get(`/boards/${id}/replies`);  //kakaoserver폴더 server.js문서 
+            setReplies(response.data);
+        } catch (err) {
+            console.error('03-08-토요일 졸리는 시간 Error fetching replies:', err);
+        }
+    };
+
+    useEffect(() => {
+        getBoard();
+        getReplies(); //28번라인, 서버단 boards/:번호/replies찾음
+    }, []);
+
+    const onDelete = async () => {
+        if (window.confirm(id + '번 게시글을 삭제하시겠습니까?')) {
+            await axios.get(`/boardDelete/${id}`);
+            navigate('/board');
+        }
+    };
+
+    //댓글 추가전에 기존내용 복사 ...퍼짐연산배열 spread연산배열
+    const handleInputChange = (e) => { 
+        const { name, value } = e.target;
+        setNewReply({ ...newReply, [name]: value });
+    };
+
+    //댓글 추가
+    const addReply = async (e) => {
+        //e.preventDefault();
+        //try {
+            await axios.post(`/boards/${id}/replies`, newReply); //server.js문서 
+        //} catch (err) { console.error('댓글등록 Error: ', err);      }
+    };
+
+   
+    //댓글 삭제
+    const deleteReply = async (replyId) => {
+        //try {
+            alert(replyId , '번호 댓글 삭제합니다');
+            await axios.delete(`/replies/${replyId}`); //server.js문서에 통신 
+            getReplies();
+        //} catch (err) { console.error('Error deleting reply:', err);   }
+    };
+
+
+    //댓글 수정
+    const updateReply = async (e) => {
+        //e.preventDefault(); 생략가능
+        //try {
+            await axios.put(`/replies/${editingReply.num}`, editingReply);
+            setShowEditModal(false);
+            setEditingReply(null);
+            getReplies(); //댓글내용 뿌리기
+        //} catch (err) {console.error('Error updating reply:', err);  }
+    }; 
+
+    //댓글에 댓글입력시  onChange이벤트에서 호출함
+    const handleEditInputChange = (e) => {
+        const { name, value } = e.target;
+        setEditingReply({ ...editingReply, [name]: value });
+    };
+
+    //댓글에  수정
+    const startEditingReply = (reply) => {
+        setEditingReply(reply);
+        setShowEditModal(true);
+    };
+
+
+    return (
+        <div className="board-view">
+            <Row className='my-5'>
+                <Col className='px-5'>
+                    <h2 className='my-5 text-center'>Board View [No. {id}]</h2>
+                    <div className='text-end my-2'>
+                        <Link to={`/boardEdit/${id}`}>
+                            <Button className='btn mx-2'>수정</Button>
+                        </Link>
+                        <Button className='btn' variant='danger' onClick={onDelete}>삭제</Button>
+                    </div>
+                    <Card>
+                        <Card.Body>
+                            <h5>[{board.id}] {board.title}</h5>
+                            <hr />
+                            <div className='cArea'>{board.content}
+                                <br />
+                                <AiFillHeart style={{ color: 'hotpink' }} />
+                                <AiFillDislike style={{ color: 'green' }} />
+                            </div>
+                        </Card.Body>
+                        <Card.Footer>
+                            Created on {board.wdate} by {board.name}
+                        </Card.Footer>
+                    </Card>
+
+                    <Button className='btn mt-4' variant='secondary' onClick={() => navigate('/board')}> Board List </Button>
+    
+                  
+                    <ul className="list-group">
+                        {replies.map(reply => (
+                            <li key={reply.num} className="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>{reply.writer}:</strong> {reply.memo}
+                                    <br />
+                                    <small>{reply.reg_date}</small>
+                                </div>
+                                <div>
+                                    <Button variant="info" size="sm" className="mx-1" >댓글Edit</Button>
+                                    <Button variant="danger" size="sm" onClick={()=> deleteReply(reply.num)}> 댓글삭제 </Button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+
+                    <h3 className="mt-4"> 댓글추가영역 Add a Reply</h3>
+                    <Form onSubmit={addReply}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>작성자writer</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="writer"
+                                value={newReply.writer}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>댓글memo</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="memo"
+                                value={newReply.memo}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Button type="submit">Add Reply</Button>
+                    </Form>
+                </Col>
+            </Row>
+
+            {/* 댓글을 수정입력해야 하는 입력란을 모달dialog박스 */}
+            <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Reply</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form onSubmit={updateReply}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>작성자</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="writer"
+                                value={editingReply?.writer || ''}
+                                onChange={handleEditInputChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>댓글</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="memo"
+                                value={editingReply?.memo || ''}
+                                onChange={handleEditInputChange}
+                                required
+                            />
+                        </Form.Group>
+                        <Button type="submit">Update Reply</Button>
+                    </Form>
+                </Modal.Body>
+            </Modal>
+
+        </div>
+    );
+};
+export default BoardView;
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+웹web, 앱app에서 응답response=res, 요청request=req
+삼항연산   조건 ?  만족시item.map() : 불만족시'' 
+...spread연산  
+  modeless창 바꾸기, 찾기 
+  modal창 정보보기및 파일저장열기및 찾기 
+
+
+
+drop table react_boardreply;
+create table react_boardReply (
+   num int auto_increment primary key,
+   writer varchar(10) not null,
+   memo varchar(20) not null, 
+   board_id int,
+   reg_date timestamp default now(),
+   foreign key(board_id) references react_board(id) on delete cascade
+);
+
+commit ;
+desc  react_boardReply ;
+
+
+insert into react_board(title, name, content) values('apple', 'blue', 'cherry');
+insert into react_board(title, name, content) values('LG', '엘쥐', '제주도');
+commit;
+select * from react_board;  --여기까지만 먼저 실행 
+
+//댓글을 다는데 
+insert into react_boardreply(writer, memo, board_id) values('joo', 'sunday', 17);
+insert into react_boardreply(writer, memo, board_id) values('juu', 'monday', 17);
+commit;
+select * from react_boardreply;
+
+//62번호는 react_board테이블에 없는 id입니다 없는id값에 댓글을 달면 에러발생
+insert into react_boardreply(writer, memo, board_id) values('cho', 'rain', 10);
+insert into react_boardreply(writer, memo, board_id) values('ann', 'sk', 16);
+에러insert into react_boardreply(writer, memo, board_id) values('ann', 'sk', 62);
+commit;
+select * from react_boardreply;
+
+//BoardView.jsx문서 한건상세출력, 수정, 삭제 처리 완료
+   ㄴ댓글출력 react_boardreply댓글테이블입장 구현 server.js문서에 댓글출력 
+   ㄴ댓글입력, 댓글삭제, 댓글수정 복붙 
+   ㄴ댓글출력 우리가 직접 구현 1시 30분까지 
+
+윈도우 키 -> \\604-t -> ★리액트 주말반(김영임강사)
+
+insert into react_boardreply(writer, memo, board_id) values('ta', 'tea', 17);
+insert into react_boardreply(writer, memo, board_id) values('mo', 'test', 17);
+
+insert into react_boardreply(writer, memo, board_id) values('park', 'spring', 10);
+insert into react_boardreply(writer, memo, board_id) values('baek', 'summer', 16);
+commit ;
+select * from react_boardreply;
+
+
+*-------------------------------------------------------------
+*-------------------------------------------------------------
+윈도우 키 -> \\604-t ->
+윈도우 키 -> \\604-t -> ★리액트 주말반(김영임강사)
+
+
+네번째 App.js문서  
+import  React from 'react';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+import axios from 'axios';
+import { Table, Button} from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+
+import BoardApp  from './components/board/BoardApp' ;
+import BoardNav from './components/board/BoardNav' ;
+import BoardView  from './components/board/BoardView' ;
+import BoardForm  from './components/board/BoardForm' ;
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+function App() {
+
+  return (
+    <div className="App">
+        app.js  2:07 <br></br>
+        
+    </div>
+  );
+}
+export default App;
+
+ 		
+	단독실행이 가능한 컴포넌트 대상  BoardForm.jsx
+	단독실행이 가능한 컴포넌트 대상  BoardList.jsx
+	단독실행대상 아님 한건상세, 한건삭제, 한건수정 
+	
+//---------------------------------------------------------
+첫번째 카카오서버 마지막 수정
+두번째 카카오클라이언트 설치
+세번째 통신( 서버 5000포트 & 클라이언트 3000포트 )
+ ㄴ 서비스이용하는 클라이언트 "proxy": "locatlhost:5000" ,
+ ㄴ 통신을 성공후 데이터 주고받고 
+    axios.get( ('/boardList').then( res=>{res.data}) )  전체출력,한건출력, 한건삭제
+    axios.post( ('/boardWrite').then(입력란데이터) ) 한건등록, 한건수정
+
+연산
+ ㄴ 산술연산  + - * /몫, 나머지
+ ㄴ 관계연산  >= <= > < === 
+ ㄴ 논리연산  ||  &&
+ ㄴ 삼항연산  ret결과 = hap>=70 ? "축합격" : "재시험"
+    kor=90; eng=85; hap=kor+eng
+    if(hap>=70){ "축합격" }
+    else { "재시험" }
+    
+
+
+클라이언트 반드시 설치 
+C:~client> npm i axios   
+C:~client> npm i react-icons  
+C:~client> npm i react-bootstrap  bootstrap
+C:~client> npm i react-dom  
+C:~client> npm i react-router-dom  
+
+kakaoclient플젝의 node_modules 삭제후
+kakaoclient> npm  i
+
+
+
+App.js ->  BoardApp.jsx + BoardNav.jsx 
+   components/board/BoardApp.jsx문서역할 write/list
+   BoardApp.jsx문서 BoardNav.jsx포함
+   BoardNav.jsx문서 <Link to onClick={}>
+   
+   list클릭   BoardList.jsx문서로 넘어갈때 onMode
+   write클릭  BoardForm.jsx문서로 넘어갈때 onMode
+   
+  BoardList.jsx문서에서 제목클릭하면 상세문서 BoardView.jsx
+      <td> {boards.title} </td>
+
+  BoardView.jsx문서는 한건만 출력
+    ㄴ 수정작업BoardModify.jsx문서, 삭제작업은 문서가 따로 없습니다
+    ㄴ 하단에 댓글 
+
+
+ 3월1일 삼일절 공휴일 쉬고 
+ 3월8일 토요일 삭제, 수정, 댓글작업, 리덕스예제 
+ 
+ BoardList.jsx문서에는
+  ㄴ 총레코드갯수 
+  ㄴ 제목클릭하면 한건상세
+  ㄴ 검색 & 페이징 추가  
+     posasi2000 네이버  
+     posasi2000@naver.com  김영임(김영림=라일락)
+
+
+
+
+
+insert into react_board(title, name, content) values('spring', 'kim', 'one');
+insert into react_board(title, name, content) values('summer', 'lee', 'two');
+insert into react_board(title, name, content) values('winter', 'park', 'three');
+commit;
+
+select * from react_board;
+commit;
+
+mysql> update react_board  set title='snow', name='you', 
+        content='coffee',  wdate=now()  where  id = 10 ;
+
+mysql> commit;
+mysql> select * from react_board ;
+
+mysql> delete  from react_board  where id = 4 ;
+mysql> commit;
+mysql> select * from react_board ;
+
+
+*----------------------------------------------------------
+drop table react_boardreply;
+create table react_boardReply (
+   num int auto_increment primary key,
+   writer varchar(10) not null,
+   memo varchar(20) not null, 
+   board_id int,
+   reg_date timestamp default now(),
+   foreign key(board_id) references react_board(id) on delete cascade
+);
+
+commit ;
+desc  react_boardreply ;
+
+
+
+순서1] 
+https://www.mysql.com
+https://www.mysql.com/downloads/
+ ㄴ하단 MySQL Community (GPL) Downloads클릭 
+ ㄴ왼쪽 MySQL Community Server클릭 
+ ㄴ8.0.41버젼 기본선택  ▼(현재변경됨  9.2.0 Innovation선택금지)
+ ㄴ돌고래 하단에 Go to Download Page >
+
+
+kakaoserver폴더생성 nodejs문법으로 쿼리문작성
+  ㄴ Cross-Origin Resource Sharing(CORS) & axios
+kakaoclient플젝 리액트구현 form태그 
+
+kakaoserver폴더생성 nodejs문법으로 쿼리문작성
+  ㄴ Cross-Origin Resource Sharing(CORS) & axios
+  ㄴ npm  i  
+  ㄴ npm  i  express
+  ㄴ npm  i  mysql 
+  ㄴ npm  i  mysql2
+  ㄴ npm  i  axios
+  ㄴ npm  i  cors
+  ㄴ npm  i  json
+  ㄴ npm  i  nodemon
+  package.json문서에 기록됨
+
+
+kakaoclient플젝생성 
+  ㄴ npm  i  axios
+  ㄴ npm i react-icons 
+  ㄴ npm install react-bootstrap bootstrap 
+  ㄴ npm install --save  react-router-dom  
+
+
+index.js문서보다는 server.js 권장 사용 
+kakaoserver서버단 구성후 실행
+C:\Mtest\kakaoserver> npm start  추천
+C:\Mtest\kakaoserver> node server.js
+C:\Mtest\kakaoserver> npm run dev 
+
+
+
+
+
+
+
+윈도우버튼 cmd입력
+C:\Users\Administrator> cd\
+C:\> cd Mtest
+C:\Mtest> cls
+C:\Mtest> npx create-react-app  kakaoclient
+C:\Mtest> cd kakaoclient
+C:\Mtest\kakaoclient>  npm install web-vitals   
+C:\Mtest\kakaoclient>  npm start 
+
+
+mysql-installer-community-8.0.41.0.msi파일선택해서 더블클릭실행
+
+윈도우버튼 mysql 
+Enter password: 1234
+
+mysql> system cls;  
+mysql> select lpad('7890', 15, '*');  
+mysql> select rpad('7890', 15, '*');
+mysql> select replace('JACK', 'J', 'BL');     --BLACK출력
+mysql> select date_format(sysdate(), '%Y');   
+mysql> select str_to_date('29 01 2025', '%d %m %Y'); 
+mysql> system cls; 
+
+mysql> select cast('12.3123' as decimal(10,1))  as cast ;  --12.3출력
+mysql> select  round('12.3123'  ,1 ) as cast ;
+
+mysql> select  sysdate() ;      
+mysql> select  current_time() ;   
+mysql> select  now() ;   
+
+mysql> show databases;
+mysql> create database naver ;
+mysql> commit ;
+mysql> use naver ;
+mysql> show tables ;
+mysql> drop table test  ; ----에러발생
+
+mysql> create table test (
+        num int(4) not null auto_increment primary key ,
+        name varchar(10) not null 
+       );
+
+mysql> commit ;
+mysql> show tables ;
+mysql> desc test ;
+
+mysql> drop table test  ;
+mysql> create table test ( 
+        code int(4)  primary key ,
+	name varchar(10) not null 
+       );
+
+mysql> show tables ;
+mysql> desc test ;
+mysql>
+ insert into  test(code, name) values( 7700 , 'kim') ;
+ insert into  test(code, name) values( 8800 , 'lee') ;
+ insert into  test(code, name) values( 9900 , 'goo') ;
+
+mysql> select * from  test ; ----전체데이터 확인
+
+문제1] 3300사번, 길동 한건등록입니다  SQL문장에서 문자는  싱글따옴표시
+mysql> insert into test(code,name) values( 3300, '길동' ); 
+
+mysql> select * from  test ; ----전체데이터 확인
+mysql> select code, name from test ;  ----code,name열컬럼필드
+mysql> select * from  test where code = 7700 ;
+mysql> select * from  test where name = kim ; ----에러발생
+mysql> select * from  test where name = 'kim' ; ----에러해결
+mysql> select * from test order by code desc ;  ----코드역순
+mysql> system cls;  
+
+mysql> insert into test(code,name) values(5566,'cho');  ----등록
+mysql> select * from  test ;  --전체조회
+mysql> select * from  test where code = 9900 ;  --한건조회
+
+----수정update set  삭제처리 delete 
+mysql> update test  set name = 'john' ; ----단점은 전부 이름이 john
+mysql> select * from  test ; 
+mysql> update test  set name = 'shin' where code = 7700 ; 
+mysql> select * from  test ; 
+mysql> update test  set name = 'dan' where code = 9900 ; 
+mysql> commit ;
+mysql>
+mysql> select * from  test ; 
+mysql> delete * from  test  ; ----문법에러 
+mysql> delete  from   test where code = 9900 ;  
+mysql> select * from  test ; 
+mysql> delete  from   test where name = 'lee' ; 
+mysql> commit ;
+mysql> select * from  test ; 
+
+
+
+
+drop table react_boardreply;
+drop table react_board;
+create table react_board(
+    id int auto_increment primary key,
+    title varchar(20),
+    name varchar(30),
+    content varchar(30),
+    wdate timestamp default now()
+);
+
+insert into react_board(title, name, content) values('spring', 'kim', 'one');
+insert into react_board(title, name, content) values('summer', 'lee', 'two');
+insert into react_board(title, name, content) values('winter', 'park', 'three');
+commit;
+
+select * from react_board;
+commit;
+desc react_board ;
+
+//댓글 테이블 
+drop table react_boardreply;
+create table react_boardReply (
+   num int auto_increment primary key,
+   writer varchar(10) not null,
+   memo varchar(20) not null, 
+   board_id int,
+   reg_date timestamp default now(),
+   foreign key(board_id) references react_board(id) on delete cascade
+);
+
+commit ;
+desc  react_boardReply ;
+
+
+
+
+
+*-------------------------------------------------------------
+2월8일 토요일(3회차 리액트 수업)
+day0125
+ ㄴnode_modules
+ ㄴpublic
+ ㄴsrc
+   ㄴcomponents
+   ㄴ언급data/data.js문서를 어떻게 App.js에서 호출연결하느냐?
+   ㄴApp.js 
+ ㄴpackage.json
+
+
+<div>
+   OOO.jsx<br></br>
+</div>
+
+~\day0125> npm install axios
+~\day0125> npm install react-bootstrap  bootstrap 
+
+학원에서 가져갈때 node_modules폴더 빼고 복붙
+집에서 npm start 실행했더니 에러발생
+
+~\day0125> npm install
+  node_modules폴더를 다시 생성
+
+//components/BoardWrite.jsx
+import axios from 'axios';
+import React, { useState } from 'react'
+import { Row, Col, Form, Button } from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+return (
+<Row className='my-5'>
+            <Col className='p-5'>
+                <h1 className='text-center my-5 text-primary' >게시글 작성</h1>
+                <Form>
+                    <h4 className='text-success'> 제목</h4><Form.Control placeholder='제목을 입력하세요.'
+                        className='my-3' name='title' value={title} onChange={onChange} />
+
+                    <h4 className='text-info'> 작성자</h4><Form.Control placeholder='작성자를 입력하세요.'
+                        className='my-3' name='writer' value={writer} onChange={onChange} />
+
+                    <h4 className='text-primary'> 내용</h4><Form.Control as='textarea' rows={10} placeholder='내용을 입력하세요.'
+                        className='my-3' name='contents' value={contents} onChange={onChange} />
+
+                    <div className='text-center'>
+                        <Button className='mx-2 px-3 btn-sm' variant="primary" onClick={onSubmit} style={{ marginRight: '10px' }}>저장</Button>
+                        <Button className='mx-2 px-3 btn-sm' variant="success" onClick={onReset} >초기화</Button>
+                    </div>
+                </Form>
+            </Col>
+        </Row>
+)
+
+
+//참고 부트스트랩
+  <button> button </button> 
+    <button class="btn btn-primary"> primary </button> 
+    <button class="btn btn-success"> success </button> 
+    <button class="btn btn-info"> info </button> 
+    <button class="btn btn-warning"> warning </button> 
+    <button class="btn btn-danger"> danger </button> 
+    <button class="btn btn-secondary"> secondary </button> 
+    <button class="btn btn-dark"> dark </button> 
+    <button class="btn btn-light"> light </button> 
+    <br>
+
+    <button class="btn btn-outline-primary"> primary </button> 
+    <button class="btn btn-outline-success"> success </button> 
+    <button class="btn btn-outline-info"> info </button> 
+    <button class="btn btn-outline-warning"> warning </button> 
+    <button class="btn btn-outline-danger"> danger </button> 
+    <button class="btn btn-outline-secondary"> secondary </button> 
+
+
+ text-primary, text-success, text-danger 등은 Bootstrap의 텍스트 색상 클래스입니다.
+ text-primary: 파란색
+ text-success: 초록색
+ text-danger: 빨간색
+ text-warning: 주황색
+ text-info: 하늘색
+ text-secondary: 회색
+ font-weight-bold: 텍스트를 굵게 표시합니다.
+ font-italic: 텍스트를 기울임꼴로 표시합니다.
+ small 태그는 제목에 작은 글씨를 추가할 때 사용합니다.
+ 
+
+    <p></p> <br>
+    <button class="btn btn-primary btn-lg"> 보내기 </button> 
+    <button class="btn btn-primary"> 보내기 </button> 
+    <button class="btn btn-primary btn-sm"> 보내기 </button> 
+
+    <p></p> <br>
+    <a href="#"  class="btn btn-primary">네이버구글</a>
+    <a href="#"  class="btn btn-success">카카오아마존</a>
+
+    <p></p> <br>
+    <button class="btn btn-warning btn-lg"> 보내기 </button> 
+    <button class="btn btn-warning"> 보내기 </button> 
+    <button class="btn btn-warning btn-sm"> 보내기 </button> 
+
+
+
+첫째주 리액트 문법  
+리액트 function (){ } const 이름 = {} useState
+리액트 초장기 시작 버젼 class기반 구현 라이프사이클
+ ex) 처음로드시, 시간간격, 버튼클릭,이미지클릭, 입력란변환 
+
+
+image source width  height alter
+<img  src='./data/hy.png' width='250' height='70' alt='수선화' >
+
+  <HeroList  retheroList = {hero}  />
+
+
+
+
+

@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+}
+
+.App {
+  text-align: center;
+}
+
+.header {
+  background-color: #abcdef;
+  /* height: 50px; */
+  height: 25px;
+}
+
+.home, .comp {
+  height: 150px;
+}
+
+.footer {
+  margin-top: 300px;
+  background-color: lightseagreen;
+  height: 80px;
+}
+
+a {
+  margin: 10px;
+  
+}
+
+button {
+  margin: 5px 10px;
+}
+
+
+/* 배열출력 table사용  */
+table {
+  width:  550px;
+  /* margin-left: 400px; */
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+/* table ,th, td  {
+  width:  450px;
+  margin-left: 100px;
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+} */
+
+th, td {  border: 1px solid black; }
+
+
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.App-ul li{
+  list-style:none;
+}
+.header ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;  
+  background-color: #111;
+}
+
+.header li{
+  list-style:none;
+  padding: 1em;  
+}
+
+.header li a{
+  color:#fff;
+  text-decoration: none;
+}

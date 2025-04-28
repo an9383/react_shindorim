@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<script>
+    var fruit = new Array(3); //크기확보
+    var lotto = new Array(25, 9, 14, 43 , 2, 30); //초기값으로 확보
+    var kind = [ '빅데이터', '자바', 'python'] ; //초기화 [ ]
+    //첫번째  for(var i in kind){ document.write(kind[i] + "&nbsp; &nbsp;");}
+    //두번째 kind.forEach(function(item, i){document.write((i+1) + ':' + item + '<br>')});
+    kind.map((item,i)=>{document.write((i+1) + ':' + item + '&nbsp; &nbsp; ')});
+    document.write("<br><p>");
+    
+    var origin = { num: 1200} ;
+    var copy = { origin };
+    copy.num = 7800 ;
+    document.write("원본 = " + origin.num +"<br>");  
+    document.write("복사 = " + copy.num +"<br>");  
+</script>
+
+<style>
+    *{font-size: 16pt; font-weight: bold;}
+</style>
+</head>
+<body>
+    <p></p>
+    <b>자바스크립트 예제 1:08 1:24 </b>
+</body>
+</html>

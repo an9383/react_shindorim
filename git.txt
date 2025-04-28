@@ -1,0 +1,13 @@
+git rm -r --cached .
+git add .
+git commit -m "fixed untracked files"
+
+http://218.238.95.78:8099/ReportingServer/html5/sample/sample.html?mrd_path=doc_approve.mrd&mrd_param=test1,test2,test3
+
+357592319863325
+
+357592312122125
+
+89049032007408882600198220277668
+
+GF7PW1Y6RM
