@@ -78,8 +78,6 @@ C:\Mtest\day0125>  npm start  //실행후 종료 ctrl + C 두세번정도 누르
    Automatically Add HTML
 ㄴLive server
 
-
-
 실습코드1] App.js문서 
 import hydran from './images/a1.png' ;
 import './App.css';
@@ -167,8 +165,6 @@ function App() {
   );
 }
 export default App;
-
-
 
 실습코드5] MyBTS.jsx
 //rfce
